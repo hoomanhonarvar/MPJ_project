@@ -1,15 +1,15 @@
 package com.example.demo.ui.model.response;
 
 public class UserDetailResponseModel {
-    private String ID;
+    private String Username;
     private String Pass;
 
-    public String getID() {
-        return ID;
+    public String getUsername() {
+        return Username;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setUsername(String Username) {
+        this.Username = Username;
     }
 
     public String getPass() {
