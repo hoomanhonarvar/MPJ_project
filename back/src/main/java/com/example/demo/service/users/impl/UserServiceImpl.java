@@ -1,9 +1,9 @@
-package com.example.demo.service.impl;
+package com.example.demo.service.users.impl;
 
-import com.example.demo.Repository.UserRepository;
-import com.example.demo.model.dto.UserDto;
-import com.example.demo.model.entity.UserEntity;
-import com.example.demo.service.UserService;
+import com.example.demo.Repository.users.UserRepository;
+import com.example.demo.model.users.dto.UserDto;
+import com.example.demo.model.users.entity.UserEntity;
+import com.example.demo.service.users.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

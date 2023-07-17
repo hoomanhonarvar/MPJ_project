@@ -1,4 +1,4 @@
-package com.example.demo.model.request;
+package com.example.demo.model.users.request;
 
 
 import jakarta.validation.constraints.Email;

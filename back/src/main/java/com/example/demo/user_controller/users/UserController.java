@@ -1,13 +1,11 @@
-package com.example.demo.user_controller;
+package com.example.demo.user_controller.users;
 
-import com.example.demo.model.request.UserDetailRequestModel;
-import com.example.demo.service.UserService;
-import com.example.demo.model.dto.UserDto;
-import com.example.demo.model.response.UserDetailResponseModel;
-import com.example.demo.model.response.UserRest;
+import com.example.demo.model.users.request.UserDetailRequestModel;
+import com.example.demo.service.users.UserService;
+import com.example.demo.model.users.dto.UserDto;
+import com.example.demo.model.users.response.UserDetailResponseModel;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("users") //https://localhost:8080/users
+@RequestMapping("users") //https://localhost:3309/users
 public class UserController {
     private final UserService userService;
 
