@@ -1,4 +1,4 @@
-package com.example.demo.ui.model.response;
+package com.example.demo.model.response;
 
 public class UserRest {
     public void setUsername(String Username) {
