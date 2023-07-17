@@ -1,5 +1,6 @@
 package com.example.demo.user_controller;
 
+import com.example.demo.model.request.UserDetailRequestModel;
 import com.example.demo.service.UserService;
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.response.UserDetailResponseModel;
@@ -48,10 +49,11 @@ public class UserController {
             MediaType.APPLICATION_XML_VALUE
     })
 
-    public ResponseEntity<UserDetailResponseModel> register(@Valid @RequestBody UserDetailResponseModel userRequest){
+    public ResponseEntity<UserDetailResponseModel> register(@Valid @RequestBody UserDetailRequestModel userRequest){
 
         UserDto userDto = userService.register(new ModelMapper().map(userRequest , UserDto.class));
 //        UserDto userDto = userService.register()
+
         return new ResponseEntity<>(new ModelMapper().map(userDto,UserDetailResponseModel.class),HttpStatus.CREATED);
     }
     @PutMapping

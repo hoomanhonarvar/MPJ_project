@@ -31,6 +31,7 @@ public class ProjectSecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(user1,  admin);
     }
+
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -38,8 +39,8 @@ public class ProjectSecurityConfig {
 
                 .authorizeHttpRequests(
                         requests ->
-                                requests.requestMatchers("/cards").authenticated()
-                                        .requestMatchers("/users","/users/signup").permitAll()
+                                requests.requestMatchers("/cards","/users").authenticated()
+//                                        .requestMatchers("/users","/users/signup").permitAll()
 
                 )
                 .formLogin(Customizer.withDefaults())

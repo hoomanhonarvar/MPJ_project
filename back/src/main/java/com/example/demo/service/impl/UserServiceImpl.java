@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
    @Override
    public UserDto register(UserDto userDto){
         UserEntity userEntity = new UserEntity();
-        userEntity.setRole("Admin");
+        userEntity.setRole("USER");
         userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userEntity.setUsername(userDto.getUsername());
 
