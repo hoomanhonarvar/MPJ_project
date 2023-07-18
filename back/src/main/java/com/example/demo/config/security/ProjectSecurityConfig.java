@@ -40,7 +40,7 @@ public class ProjectSecurityConfig {
                 .authorizeHttpRequests(
                         requests ->
                                 requests.requestMatchers("/cards").authenticated()
-                                        .requestMatchers("/users","/users/signup","/users/*","/message/send","/message").permitAll()
+                                        .requestMatchers("/users","/users/signup","/users/*","/message/send","/message","/send").permitAll()
 
                 )
                 .formLogin(Customizer.withDefaults())

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "messages")
@@ -22,5 +23,6 @@ public class MessageEntity implements Serializable
     private String sender;
     private String receiver;
     private String body;
+    private Date date;
 
 }
