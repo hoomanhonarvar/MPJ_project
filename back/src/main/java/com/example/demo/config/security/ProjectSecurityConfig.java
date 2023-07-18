@@ -39,8 +39,8 @@ public class ProjectSecurityConfig {
 
                 .authorizeHttpRequests(
                         requests ->
-                                requests.requestMatchers("/cards","/users").authenticated()
-//                                        .requestMatchers("/users","/users/signup").permitAll()
+                                requests.requestMatchers("/cards").authenticated()
+                                        .requestMatchers("/users","/users/signup","/users/*","/message/send","/message").permitAll()
 
                 )
                 .formLogin(Customizer.withDefaults())

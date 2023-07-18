@@ -7,8 +7,6 @@ import com.example.demo.service.users.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,22 +41,35 @@ public class UserServiceImpl implements UserService {
    }
 
     @Override
-    public UserDetails loadUserByUsername(String username)throws UsernameNotFoundException{
+    public UserDto loadUserByUsername(String username)throws UsernameNotFoundException{
         UserEntity userEntity = userRepository.findByUsername(username);
 
         if(userEntity==null){
-            throw new UsernameNotFoundException("ajab");
+            throw new UsernameNotFoundException("Username not found");
         }
         List<GrantedAuthority> authorities =new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(userEntity.getRole()));
+//        UserDetails userDetails = new UserDetails();
 
-        return new User(userEntity.getUsername(),userEntity.getPassword(),authorities);
+        UserDto map = new ModelMapper().map(userEntity, UserDto.class);
+        return map;
 
 
 
     }
+    @Override
+    public boolean equalshash(Object o){
+        if (this==o)
+            return true;
 
-//    public Stream<UserEntity>getAllUsers(){
-//        return UserRepository.findAll().stream();
-//    }
+        else if(o==null||this.getClass()!=o.getClass())
+            return false;
+
+
+        return false;
+    }
+
+//
+
+
 }

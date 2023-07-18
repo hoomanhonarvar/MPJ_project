@@ -1,4 +1,4 @@
-package com.example.demo.model.message.requser;
+package com.example.demo.model.message.request;
 
 
 import jakarta.validation.constraints.Email;
@@ -17,7 +17,7 @@ public class MessageRequest {
     @Email
     private String sender;
     @Email
-    private String recevier;
+    private String receiver;
 
     @NotBlank
     @NotEmpty

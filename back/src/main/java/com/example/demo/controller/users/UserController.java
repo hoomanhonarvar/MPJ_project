@@ -1,4 +1,4 @@
-package com.example.demo.user_controller.users;
+package com.example.demo.controller.users;
 
 import com.example.demo.model.users.request.UserDetailRequestModel;
 import com.example.demo.service.users.UserService;
@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 //import javax.validation.Valid;
@@ -18,21 +19,32 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("users") //https://localhost:3309/users
 public class UserController {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder ;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
-    @GetMapping
-    public String getUsers(){return "Ana Users!";}
-//    @GetMapping(path="{userId}",
+//    @GetMapping
+//    public String getUsers(){return "Ana Users!";}
+//
+//
 
-//    public ResponseEntity<UserRest> getUser(@PathVariable String Username){
-//    UserRest returnValue = new UserRest();
-//    returnValue.setUsername("hooman");
-//    returnValue.setPass("123456789");
-//    return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
+
+//    @GetMapping(path="{userId}")
+//
+//    public UserRest getuser(@PathVariable String userId){
+//
+//        UserDetails user = userService.loadUserByUsername(userId);
+//
+//        UserRest userrest= new UserRest();
+//        userrest.setPassword(user.getPassword());
+//        userrest.setUsername(user.getUsername());
+//        return  userrest;
+//
 //
 //    }
 
@@ -42,12 +54,29 @@ public class UserController {
 //        return register(null);
 //    }
 
+//    @PostMapping(path="/signin", produces={
+//            MediaType.APPLICATION_JSON_VALUE,
+//            MediaType.APPLICATION_XML_VALUE
+//    })
+//    public String signin(@Valid @RequestBody UserDetailRequestModel userRequset ){
+//        UserDto userDto =userService.loadUserByUsername(userRequset.getUsername());
+//        String encpass = passwordEncoder.encode(userRequset.getPassword());
+//        boolean m=;
+//        if (!m)
+//         {
+//            throw new UsernameNotFoundException("wrong password");
+//        } else {
+//            return "user signed in without any error";
+//        }
+//
+//
+//    }
     @PostMapping(path="/signup",            produces={
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE
     })
 
-    public ResponseEntity<UserDetailResponseModel> register(@Valid @RequestBody UserDetailRequestModel userRequest){
+    public ResponseEntity<UserDetailResponseModel> signup(@Valid @RequestBody UserDetailRequestModel userRequest){
 
         UserDto userDto = userService.register(new ModelMapper().map(userRequest , UserDto.class));
 //        UserDto userDto = userService.register()

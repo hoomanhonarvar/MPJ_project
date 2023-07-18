@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UserDetailResponseModel {
-    private String Username;
+    private String username;
     private String role;
 
 
