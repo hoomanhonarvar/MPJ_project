@@ -18,7 +18,8 @@ public class UserEntity implements Serializable{
     private long id;
 
     private String username;
-    private String password;
+    private String password; //encrypted pass
+    private String pass;
     private String role;
 
 

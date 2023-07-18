@@ -7,6 +7,7 @@ import com.example.demo.service.users.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,6 +34,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = new UserEntity();
         userEntity.setRole("USER");
         userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userEntity.setPass(userDto.getPassword());
         userEntity.setUsername(userDto.getUsername());
 
         UserEntity savedUserEntity = userRepository.save(userEntity);
@@ -43,16 +45,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto loadUserByUsername(String username)throws UsernameNotFoundException{
         UserEntity userEntity = userRepository.findByUsername(username);
+        UserDto userDto=new UserDto();
 
         if(userEntity==null){
             throw new UsernameNotFoundException("Username not found");
         }
-        List<GrantedAuthority> authorities =new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(userEntity.getRole()));
-//        UserDetails userDetails = new UserDetails();
+//        List<GrantedAuthority> authorities =new ArrayList<>();
+//        authorities.add(new SimpleGrantedAuthority(userEntity.getRole()));
+////        UserDetails userDetails = new UserDetails();
+        if(userEntity.getUsername()!=null){
+        userDto.setPass(userEntity.getPass());
+        userDto.setUsername(userEntity.getUsername());}
 
-        UserDto map = new ModelMapper().map(userEntity, UserDto.class);
-        return map;
+//        UserDto map = new ModelMapper().map(userEntity, UserDto.class);
+        return userDto;
 
 
 

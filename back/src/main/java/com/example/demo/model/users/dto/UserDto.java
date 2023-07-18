@@ -12,8 +12,9 @@ import java.io.Serializable;
 public class UserDto implements Serializable {
     private long id;
     private String username;
-    private String password;
+    private String password; //encrypted pass
     private String role;
+    private String pass;
 
 
 }

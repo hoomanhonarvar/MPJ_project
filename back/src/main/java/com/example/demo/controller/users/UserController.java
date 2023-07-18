@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,34 +55,45 @@ public class UserController {
 //        return register(null);
 //    }
 
-//    @PostMapping(path="/signin", produces={
-//            MediaType.APPLICATION_JSON_VALUE,
-//            MediaType.APPLICATION_XML_VALUE
-//    })
-//    public String signin(@Valid @RequestBody UserDetailRequestModel userRequset ){
-//        UserDto userDto =userService.loadUserByUsername(userRequset.getUsername());
-//        String encpass = passwordEncoder.encode(userRequset.getPassword());
-//        boolean m=;
-//        if (!m)
-//         {
-//            throw new UsernameNotFoundException("wrong password");
-//        } else {
-//            return "user signed in without any error";
-//        }
-//
-//
-//    }
+    @PostMapping(path="/signin", produces={
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE
+    })
+    public String signin(@Valid @RequestBody UserDetailRequestModel userRequset ){
+        UserDto userDto =userService.loadUserByUsername(userRequset.getUsername());
+        String pass= userDto.getPass();
+
+        if(userDto.getUsername()==null){
+            return("user not found please signup!");
+        }
+
+        else if (!pass.equals(userRequset.getPassword()))
+         {
+             return ("wrong password");
+
+         }
+        else  {
+            return "user signed in without any error";
+        }
+
+
+    }
     @PostMapping(path="/signup",            produces={
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE
     })
 
-    public ResponseEntity<UserDetailResponseModel> signup(@Valid @RequestBody UserDetailRequestModel userRequest){
-
-        UserDto userDto = userService.register(new ModelMapper().map(userRequest , UserDto.class));
+    public String signup(@Valid @RequestBody UserDetailRequestModel userRequest)  {
+        UserDto userDto =userService.loadUserByUsername(userRequest.getUsername());
+        if(userDto.getUsername()==null) {
+            UserDto userDto1 = userService.register(new ModelMapper().map(userRequest, UserDto.class));
 //        UserDto userDto = userService.register()
 
-        return new ResponseEntity<>(new ModelMapper().map(userDto,UserDetailResponseModel.class),HttpStatus.CREATED);
+            return new ResponseEntity<>(new ModelMapper().map(userDto1, UserDetailResponseModel.class), HttpStatus.CREATED).toString();
+        }
+        else{
+            return "username already exists! change your username";
+        }
     }
     @PutMapping
     public String changeUser(){
