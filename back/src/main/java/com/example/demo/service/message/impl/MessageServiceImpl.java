@@ -23,6 +23,7 @@ public class MessageServiceImpl implements MessageService
         messageEntity.setBody(messageDto.getBody());
         messageEntity.setSender(messageDto.getSender());
         messageEntity.setReceiver(messageDto.getReceiver());
+        messageEntity.setDate(messageDto.getDate());
         MessageEntity savedMessageEntity= messageRepository.save(messageEntity);
         return new ModelMapper().map(savedMessageEntity,MessageDto.class);
     }
