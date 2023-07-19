@@ -1,8 +1,8 @@
 import React,{useState} from "react";
 import { TextField,Typography ,Button, backdropClasses} from "@mui/material";
 import Image from './1.png'
-import './login.css'
-const Login=()=>{
+import './Signup.css'
+const Signup=()=>{
     const [inputs, setInputs] = useState({
         username:"",
         pass:""
@@ -42,22 +42,11 @@ const Login=()=>{
                         Submit
                     </button>   
                 </div>   
-                <div>
-                <br></br><br></br>
-                </div>
-                <div>
-                    <Typography>
-                        Don't have an account?
-                    </Typography>
-                    <div className="Frame1">
-                        <button className="button00" type="submit">
-                             Sign up
-                        </button>
-                    </div>
-                </div>        
+                
+                      
             </div> 
         </div>
     )
 }
 
-export default Login;
+export default Signup;

@@ -7,54 +7,54 @@ const P2P=()=>{
         <div>
         <div className="Desktop-1">
                 
-            <div className="Frame6">
-                <div className="Frame7">
+            <div className="Frame600">
+                <div className="Frame700">
                 {/* <input placeholder='maviiii' /> */}
                 <TextField variant='outlined' fullWidth label="Search" placeholder='Search' className={"p-10 "}/> 
 
 
 
                 </div>
-                <div className="Frame8">
-                    <div className='Frame20'>
+                <div className="Frame800">
+                    <div className='Frame2000'>
                         <button>
-                        <div className='Frame23'>
+                        <div className='Frame2300'>
                         <AiOutlineUser />
                             hooman
                         </div>
                         </button>
 
                     </div>
-                    <div className='Frame20'>
+                    <div className='Frame2000'>
                     <button>
-                        <div className='Frame23'>
+                        <div className='Frame2300'>
                         <AiOutlineUser />
                             hooman
                         </div>
                         </button>
 
                     </div>
-                    <div className='Frame20'>
+                    <div className='Frame2000'>
                     <button>
-                        <div className='Frame23'>
+                        <div className='Frame2300'>
                         <AiOutlineUser />
                             hooman
                         </div>
                         </button>
 
                     </div>
-                    <div className='Frame20'>
+                    <div className='Frame2000'>
                     <button>
-                        <div className='Frame23'>
+                        <div className='Frame2300'>
                         <AiOutlineUser />
                             hooman
                         </div>
                         </button>
 
                     </div>
-                    <div className='Frame20'>
+                    <div className='Frame2000'>
                     <button>
-                        <div className='Frame23'>
+                        <div className='Frame2300'>
                         <AiOutlineUser />
                             hooman
                         </div>
@@ -64,9 +64,9 @@ const P2P=()=>{
 
                 </div>
             </div>
-            <div className="Frame1">
-                <div className="Frame2">
-                    <div className="Frame88">
+            <div className="Frame100">
+                <div className="Frame200">
+                    <div className="Frame8800">
 
                         <AiOutlineUser />
                         hooman
@@ -74,14 +74,14 @@ const P2P=()=>{
                 
 
                 </div>
-                <div className="Frame3">
-                    <div className="Frame4">
+                <div className="Frame300">
+                    <div className="Frame400">
 
                     </div>
-                    <div className="Frame5">
-                        <div className="Frame9">
-                            <input className="Input" placeholder="type..." color="white"/>
-                            <button className="Button">
+                    <div className="Frame500">
+                        <div className="Frame900">
+                            <input className="Input00" placeholder="type..." color="white"/>
+                            <button className="Button00">
                                 Send
                             </button>
                              
