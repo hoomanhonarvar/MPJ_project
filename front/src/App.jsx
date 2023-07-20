@@ -2,16 +2,21 @@ import Login from "./components/login/Login";
 import P2P from "./components/P2P/P2P"
 import Signup from "./components/Signup/Signup";
 import {
-  BrowserRouter,
+  BrowserRouter ,
   Route,
   Switch,
 } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 // import './App.css'
 function App() {
   return (
       
-     <>
-     <BrowserRouter>
+    <BrowserRouter>
+     <Switch>
+
+
+
+      
       <Route exact path='/'>
         <Login />
       </Route>
@@ -27,12 +32,12 @@ function App() {
      
      
      
+     </Switch>
+     
      </BrowserRouter>
      
      
      
-     
-     </>
 
   );
 }

@@ -2,18 +2,16 @@ import React,{useState} from "react";
 import { TextField,Typography ,Button, backdropClasses} from "@mui/material";
 import Image from './1.png'
 import './Signup.css'
-import {Link} from 'react-router-dom'
+
+  import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 // import React from "react";
 function Signup(){
+    let hisory=useHistory();
     const [message,setMessage]=useState("");
-
-    // const [inputs, setInputs] = useState({
-    //     username:"",
-    //     password:""
-    // });
     const [posts, setPosts] = useState([]);
     const [username ,setUsername]=useState("");
     const [password,setPassword]=useState("");
+    const [url,setUrl]=useState("");
 const handleSubmit= async(event)=>{
     event.preventDefault(); 
        
@@ -21,7 +19,6 @@ const handleSubmit= async(event)=>{
             method: 'POST',
             headers:{
                 'Content-Type':'application/json'
-                //  'Access-Control-Allow-Origin': '*',
             },
             body:JSON.stringify({
                 username: username,
@@ -32,9 +29,13 @@ const handleSubmit= async(event)=>{
         })
         .then(response => {
     let resp = response;
-    // console.log(response.json())
     if (response.status===201){
          setMessage("User created succesfully");
+         if(response.status===201){
+           setMessage("user created succesfully!")
+           hisory.push("/chat");
+           hisory.go(0);
+        }
     }
      else{
     setMessage("Some error occured");
@@ -56,10 +57,7 @@ const handleSubmit= async(event)=>{
                     </Typography>
                 </div>
                 <div className="Frame3">
-                    {/* <TextField variant="outlined" label="USERNAME" className="field"  onChange={(e)=>setUsername(e.target.value)}> 
-
-                    </TextField> */}
-                    <input type="email" onChange={(e)=>setUsername(e.target.value)} />
+                    <TextField type="email" onChange={(e)=>setUsername(e.target.value)} />
                 </div>
                 <div className="Frame4">
                     <Typography>
@@ -67,10 +65,7 @@ const handleSubmit= async(event)=>{
                     </Typography>
                 </div>
                 <div className="Frame5">
-                    {/* <TextField variant="outlined" label="PASSWORD" type="password" className="field" onChange={(e)=>setPassword(e.target.value)}>
-
-                    </TextField> */}
-                     <input type="password" onChange={(e)=>setPassword(e.target.value)} />
+                     <TextField type="password" onChange={(e)=>setPassword(e.target.value)} />
 
                 </div> 
                 <div>
@@ -87,8 +82,10 @@ const handleSubmit= async(event)=>{
                   {message}
                 </div> 
                 
+                
                       
             </div> 
+           
         </div>
     )
 }

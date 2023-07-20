@@ -2,11 +2,15 @@ import React,{useState} from "react";
 import { TextField,Typography ,Button, backdropClasses} from "@mui/material";
 import Image from './1.png'
 import './login.css'
+import {Link} from 'react-router-dom'
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 const Login=()=>{
     const [inputs, setInputs] = useState({
         username:"",
         pass:""
     });
+    const history=useHistory();
     return(
 
         <div className="maincontainer">
@@ -49,11 +53,14 @@ const Login=()=>{
                     <Typography>
                         Don't have an account?
                     </Typography>
+                    </div>
                     <div className="Frame1">
-                        <button className="button00" type="submit">
+                        <Link to="/signup" >
+                        <button className="button00" type="button"onClick={() => {window.location.href="/signup"}} >
                              Sign up
                         </button>
-                    </div>
+                        </Link>
+                   
                 </div>        
             </div> 
         </div>
