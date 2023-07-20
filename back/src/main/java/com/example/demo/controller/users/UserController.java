@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 //import javax.validation.Valid;
 
+@CrossOrigin(origins = "http://localhost:3000")
 
 @RestController
 @RequestMapping("users") //https://localhost:3309/users
@@ -83,16 +84,17 @@ public class UserController {
             MediaType.APPLICATION_XML_VALUE
     })
 
-    public String signup(@Valid @RequestBody UserDetailRequestModel userRequest)  {
+    public ResponseEntity<UserDetailResponseModel> signup(@Valid @RequestBody UserDetailRequestModel userRequest)  {
         UserDto userDto =userService.loadUserByUsername(userRequest.getUsername());
         if(userDto.getUsername()==null) {
             UserDto userDto1 = userService.register(new ModelMapper().map(userRequest, UserDto.class));
 //        UserDto userDto = userService.register()
 
-            return new ResponseEntity<>(new ModelMapper().map(userDto1, UserDetailResponseModel.class), HttpStatus.CREATED).toString();
+            return new ResponseEntity<>(new ModelMapper().map(userDto1, UserDetailResponseModel.class), HttpStatus.CREATED);
         }
         else{
-            return "username already exists! change your username";
+//            ResponseEntity<UserDetailResponseModel> responseEntity=new ResponseEntity<UserDetailResponseModel>;
+            return null;
         }
     }
     @PutMapping

@@ -46,14 +46,14 @@ public class UserServiceImpl implements UserService {
     public UserDto loadUserByUsername(String username)throws UsernameNotFoundException{
         UserEntity userEntity = userRepository.findByUsername(username);
         UserDto userDto=new UserDto();
-
-        if(userEntity==null){
-            throw new UsernameNotFoundException("Username not found");
-        }
+        userDto.setUsername(null);
+//        if(userEntity==null){
+//            throw new UsernameNotFoundException("Username not found");
+//        }
 //        List<GrantedAuthority> authorities =new ArrayList<>();
 //        authorities.add(new SimpleGrantedAuthority(userEntity.getRole()));
 ////        UserDetails userDetails = new UserDetails();
-        if(userEntity.getUsername()!=null){
+        if(userEntity!=null){
         userDto.setPass(userEntity.getPass());
         userDto.setUsername(userEntity.getUsername());}
 
