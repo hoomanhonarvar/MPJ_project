@@ -4,6 +4,7 @@ import com.example.demo.model.users.request.UserDetailRequestModel;
 import com.example.demo.service.users.UserService;
 import com.example.demo.model.users.dto.UserDto;
 import com.example.demo.model.users.response.UserDetailResponseModel;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -86,6 +87,7 @@ public class UserController {
 
     public ResponseEntity<UserDetailResponseModel> signup(@Valid @RequestBody UserDetailRequestModel userRequest)  {
         UserDto userDto =userService.loadUserByUsername(userRequest.getUsername());
+        ObjectMapper objectMapper = new ObjectMapper();
         if(userDto.getUsername()==null) {
             UserDto userDto1 = userService.register(new ModelMapper().map(userRequest, UserDto.class));
 //        UserDto userDto = userService.register()
@@ -94,7 +96,7 @@ public class UserController {
         }
         else{
 //            ResponseEntity<UserDetailResponseModel> responseEntity=new ResponseEntity<UserDetailResponseModel>;
-            return null;
+            return new  ResponseEntity<> (null,HttpStatus.MULTIPLE_CHOICES);
         }
     }
     @PutMapping

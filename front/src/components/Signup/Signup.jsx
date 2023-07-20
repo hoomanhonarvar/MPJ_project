@@ -16,28 +16,7 @@ function Signup(){
     const [password,setPassword]=useState("");
 const handleSubmit= async(event)=>{
     event.preventDefault(); 
-        //  this.handleSubmit=this.handleSubmit.bind(this);
-        // const response = await fetch("http://localhost:8080/users/signup",
-        // {
-        //     method: 'POST',
-        //     headers:{'Content-Type':'application/json'},
-        //     body:JSON.stringfy({
-        //         "username":username,
-        //         "password":password
-        //     })
-        // });
-        // const result =await response.json()
-        // console.log(result)
-        // if(result.status===200){
-            
-        //     setMessage("user created succesfully");
-        //     console.log(message.target.value);
-        // }
-        // else{
-        //     setMessage("some erroe occured");
-        //     console.log(message.target.value);
-        // }
-        console.log(username)
+       
         const response =await fetch ('http://127.0.0.1:8080/users/signup',{
             method: 'POST',
             headers:{
@@ -51,30 +30,16 @@ const handleSubmit= async(event)=>{
             
 
         })
-        
-
-
-        // .then((response)=>response.json())
-        // .then((post)=>{
-        //     setPosts((posts)=>[post,...posts]);
-        //     setUsername(username);
-        //     setPassword(password);
-        // })
-        // .catch((err)=>{  
-        //     console.log(err.message);
-        // })
-        // .then((response) => response.json());
-        console.log(password)
-
-  console.log(response)
-  if (response.json().status===200){
-    setMessage("User created succesfully");
-    // setComment(result.JSON)
-  }
-  else{
+        .then(response => {
+    let resp = response;
+    // console.log(response.json())
+    if (response.status===201){
+         setMessage("User created succesfully");
+    }
+     else{
     setMessage("Some error occured");
   }
-  console.log(message)
+  })
 }
     
     return(
@@ -118,10 +83,8 @@ const handleSubmit= async(event)=>{
                  
                 </div> 
                 </form> 
-                <div className={"p-10 flex w-full gap-4 flex-col border 10xl"}>
+                <div className={"p-10 flex w-full gap-4 flex-col "}>
                   {message}
-                  {password}
-                  {username}
                 </div> 
                 
                       
