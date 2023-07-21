@@ -42,7 +42,7 @@ public class Mqconfig {
     }
     @Bean
     public Queue jsonQueue(){
-        return new Queue(JSON_QUEUE);
+        return new Queue(JSON_QUEUE,true);
     }
     @Bean
     public TopicExchange exchange(){

@@ -6,7 +6,10 @@ import com.example.demo.model.message.request.MessageRequest;
 import com.example.demo.model.message.response.MessageResponse;
 import com.example.demo.model.rabbitmq.JsonProducer;
 import com.example.demo.model.rabbitmq.Producer;
+import com.example.demo.model.users.dto.UserDto;
 import com.example.demo.service.message.MessageService;
+import com.example.demo.service.users.UserService;
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,10 +24,13 @@ public class MessageController
 {
     private final MessageService messageService;
     private Producer producer;
+    private final UserService userService;
+
     private JsonProducer jsonProducer;
-    public MessageController(MessageService messageService , Producer producer, JsonProducer jsonProducer) {
+    public MessageController(MessageService messageService , Producer producer, UserService userService, JsonProducer jsonProducer) {
         this.messageService = messageService;
         this.producer=producer;
+        this.userService = userService;
         this.jsonProducer = jsonProducer;
     }
 
@@ -49,13 +55,21 @@ public class MessageController
     })
     public ResponseEntity<MessageResponse> sendmessage(@RequestBody MessageRequest messageRequest){
         MessageDto messageDto =new ModelMapper().map(messageRequest,MessageDto.class);
+        UserDto sender =userService.loadUserByUsername(messageDto.getSender());
+        UserDto receiver=userService.loadUserByUsername(messageDto.getReceiver());
+
+        if(sender.getUsername()==null || receiver.getUsername()==null){
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+        else{
         messageDto.setDate(new Date(System.currentTimeMillis()));
         messageService.sendmessage(messageDto);
-        jsonProducer.sendJsonmessage(messageDto);
+        jsonProducer.sendJsonmessage(messageDto,"message_exchange",messageDto.getReceiver());
         MessageResponse messageResponse=new ModelMapper().map(messageDto, MessageResponse.class);
         messageResponse.setReceived(true);
         ResponseEntity<MessageResponse> messageResponseResponseEntity = new ResponseEntity<>(messageResponse, HttpStatus.CREATED);
-        return messageResponseResponseEntity;
+        return messageResponseResponseEntity;}
+
     }
 //    public ResponseEntity<String> sendJsonMessage(@RequestBody MessageDto messageDto){
 //        jsonProducer.sendJsonmessage(messageDto);

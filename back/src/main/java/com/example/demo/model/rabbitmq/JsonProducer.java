@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class JsonProducer {
 
-    public static final String JSON_ROUTING_KEY= "json_message_exchange";
-    public static final String JSONQUEUE="json_queue";
-    public static final String EXCHANGE= "message_exchange";
+//    public static final String JSON_ROUTING_KEY= "json_message_exchange";
+//    public static final String JSONQUEUE="json_queue";
+//    public static final String EXCHANGE= "message_exchange";
 
     private static final Logger LOGGER= LoggerFactory.getLogger(JsonProducer.class);
     private RabbitTemplate rabbitTemplate;
@@ -20,7 +20,7 @@ public class JsonProducer {
     public JsonProducer(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
-    public void sendJsonmessage(MessageDto messageDto){
+    public void sendJsonmessage(MessageDto messageDto,String EXCHANGE,String JSON_ROUTING_KEY){
         LOGGER.info(String.format("json message:%s",messageDto.toString()));
         rabbitTemplate.convertAndSend(EXCHANGE,JSON_ROUTING_KEY,messageDto);
     }

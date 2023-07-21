@@ -1,16 +1,17 @@
 package com.example.demo.controller.users;
 
 import com.example.demo.model.users.request.UserDetailRequestModel;
+import com.example.demo.service.rabbitmq.MqService;
 import com.example.demo.service.users.UserService;
 import com.example.demo.model.users.dto.UserDto;
 import com.example.demo.model.users.response.UserDetailResponseModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
+import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +25,12 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder ;
 
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    private final MqService mqService;
+    public UserController(UserService userService, PasswordEncoder passwordEncoder, MqService mqService) {
 
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.mqService = mqService;
     }
 
 
@@ -80,6 +83,7 @@ public class UserController {
 
 
     }
+    @SneakyThrows
     @PostMapping(path="/signup",            produces={
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE
@@ -91,7 +95,7 @@ public class UserController {
         if(userDto.getUsername()==null) {
             UserDto userDto1 = userService.register(new ModelMapper().map(userRequest, UserDto.class));
 //        UserDto userDto = userService.register()
-
+           mqService.new_queue(userDto1.getUsername());
             return new ResponseEntity<>(new ModelMapper().map(userDto1, UserDetailResponseModel.class), HttpStatus.CREATED);
         }
         else{

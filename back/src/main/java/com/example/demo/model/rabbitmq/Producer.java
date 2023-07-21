@@ -17,10 +17,10 @@ import java.util.UUID;
 @RestController
 
 public class Producer {
-    public static final String QUEUE = "message_queue";
-    public static final String ROUTING_KEY = "message_routing_key";
-
-    public static final String EXCHANGE= "message_exchange";
+//    public static final String QUEUE = "message_queue";
+//    public static final String ROUTING_KEY = "message_routing_key";
+//
+//    public static final String EXCHANGE= "message_exchange";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Producer.class);
     private MessageService messageService;
@@ -31,7 +31,7 @@ public class Producer {
     }
 
 
-    public void sendMessage(MessageDto messageDto){
+    public void sendMessage(MessageDto messageDto,String EXCHANGE,String ROUTING_KEY){
         LOGGER.info(String.format("Message %s from %s --> %s",messageDto.getBody(),messageDto.getSender(),messageDto.getReceiver()));
         messageService.sendmessage(messageDto);
         rabbitTemplate.convertAndSend(EXCHANGE,ROUTING_KEY,messageDto.toString());
