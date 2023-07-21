@@ -1,16 +1,14 @@
-package com.example.demo.model.rabbitmq;
+package com.client1.model.rabbitmq;
 
 
-import com.example.demo.model.message.dto.MessageDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Consumer
+public class Consumer {
 
-{
     public static final String QUEUE = "message_queue";
     public static final String ROUTING_KEY = "message_routing_key";
 
@@ -22,5 +20,4 @@ public class Consumer
         LOGGER.info(String.format("Received message -> %s ",message));
 
     }
-
 }

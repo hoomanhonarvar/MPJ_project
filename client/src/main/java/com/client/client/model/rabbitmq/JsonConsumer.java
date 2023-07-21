@@ -1,6 +1,6 @@
-package com.example.demo.model.rabbitmq;
+package com.client.client.model.rabbitmq;
 
-import com.example.demo.model.message.dto.MessageDto;
+import com.client.client.model.message.MessageDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
