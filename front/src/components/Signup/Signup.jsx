@@ -8,10 +8,8 @@ import './Signup.css'
 function Signup(){
     let hisory=useHistory();
     const [message,setMessage]=useState("");
-    const [posts, setPosts] = useState([]);
     const [username ,setUsername]=useState("");
     const [password,setPassword]=useState("");
-    const [url,setUrl]=useState("");
 const handleSubmit= async(event)=>{
     event.preventDefault(); 
        
@@ -30,12 +28,11 @@ const handleSubmit= async(event)=>{
         .then(response => {
     let resp = response;
     if (response.status===201){
-         setMessage("User created succesfully");
-         if(response.status===201){
+        
            setMessage("user created succesfully!")
            hisory.push("/chat");
            hisory.go(0);
-        }
+        
     }
      else{
     setMessage("Some error occured");
@@ -57,7 +54,7 @@ const handleSubmit= async(event)=>{
                     </Typography>
                 </div>
                 <div className="Frame3">
-                    <TextField type="email" onChange={(e)=>setUsername(e.target.value)} />
+                    <TextField type="email"variant="outlined" className="field"onChange={(e)=>setUsername(e.target.value)} />
                 </div>
                 <div className="Frame4">
                     <Typography>
@@ -65,7 +62,7 @@ const handleSubmit= async(event)=>{
                     </Typography>
                 </div>
                 <div className="Frame5">
-                     <TextField type="password" onChange={(e)=>setPassword(e.target.value)} />
+                     <TextField type="password" variant="outlined"className="field"onChange={(e)=>setPassword(e.target.value)} />
 
                 </div> 
                 <div>

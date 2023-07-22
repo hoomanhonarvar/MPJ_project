@@ -60,29 +60,50 @@ public class UserController {
 //        return register(null);
 //    }
 
+
     @PostMapping(path="/signin", produces={
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE
     })
-    public String signin(@Valid @RequestBody UserDetailRequestModel userRequset ){
-        UserDto userDto =userService.loadUserByUsername(userRequset.getUsername());
-        String pass= userDto.getPass();
+public ResponseEntity<UserDetailResponseModel> signin(@Valid @RequestBody UserDetailRequestModel userRequset ){
+    UserDto userDto =userService.loadUserByUsername(userRequset.getUsername());
+    String pass= userDto.getPass();
 
-        if(userDto.getUsername()==null){
-            return("user not found please signup!");
-        }
+    if(userDto==null){
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    }
 
-        else if (!pass.equals(userRequset.getPassword()))
-         {
-             return ("wrong password");
-
-         }
-        else  {
-            return "user signed in without any error";
-        }
-
+    else if (!pass.equals(userRequset.getPassword()))
+    {
+        return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
 
     }
+    else  {
+        return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+
+}
+
+//    public String signin(@Valid @RequestBody UserDetailRequestModel userRequset ){
+//        UserDto userDto =userService.loadUserByUsername(userRequset.getUsername());
+//        String pass= userDto.getPass();
+//
+//        if(userDto.getUsername()==null){
+//            return("user not found please signup!");
+//        }
+//
+//        else if (!pass.equals(userRequset.getPassword()))
+//         {
+//             return ("wrong password");
+//
+//         }
+//        else  {
+//            return "user signed in without any error";
+//        }
+//
+//
+//    }
     @SneakyThrows
     @PostMapping(path="/signup",            produces={
             MediaType.APPLICATION_JSON_VALUE,
