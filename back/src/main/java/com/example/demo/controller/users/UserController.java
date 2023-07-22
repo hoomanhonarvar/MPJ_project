@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000")
 
 @RestController
-@RequestMapping("users") //https://localhost:3309/users
+@RequestMapping("users") //https://localhost:8080/users
 public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder ;

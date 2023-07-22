@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class JsonConsumer {
-    public static final String JSONQUEUE="json_queue";
+    public static final String JSONQUEUE="hooman2@gmail.com";
 
     private static final Logger LOGGER= LoggerFactory.getLogger(JsonConsumer.class);
     @RabbitListener(queues=JSONQUEUE)

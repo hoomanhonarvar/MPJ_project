@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class JsonConsumer {
-    public static final String JSONQUEUE="json_queue";
+    public static final String JSONQUEUE="mavi2@gmail.com";
 //    public static final String JSONQUEUE="fanout_queue";
 
     private static final Logger LOGGER= LoggerFactory.getLogger(JsonConsumer.class);
