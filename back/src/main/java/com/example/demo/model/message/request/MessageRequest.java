@@ -16,7 +16,6 @@ public class MessageRequest {
 
     @Email
     private String sender;
-    @Email
     private String receiver;
 
     @NotBlank

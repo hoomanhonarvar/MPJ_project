@@ -1,15 +1,17 @@
 package com.example.demo.controller.message;
 
 
+import com.example.demo.model.channel.dto.ChannelDto;
 import com.example.demo.model.message.dto.MessageDto;
 import com.example.demo.model.message.request.MessageRequest;
 import com.example.demo.model.message.response.MessageResponse;
 import com.example.demo.model.rabbitmq.JsonProducer;
 import com.example.demo.model.rabbitmq.Producer;
 import com.example.demo.model.users.dto.UserDto;
+import com.example.demo.service.channel.ChannelService;
 import com.example.demo.service.message.MessageService;
 import com.example.demo.service.users.UserService;
-import org.apache.catalina.User;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,12 +28,16 @@ public class MessageController
     private Producer producer;
     private final UserService userService;
 
-    private JsonProducer jsonProducer;
-    public MessageController(MessageService messageService , Producer producer, UserService userService, JsonProducer jsonProducer) {
+    private final JsonProducer jsonProducer;
+
+
+    private final ChannelService channelService;
+    public MessageController(MessageService messageService , Producer producer, UserService userService, JsonProducer jsonProducer, ChannelService channelService) {
         this.messageService = messageService;
         this.producer=producer;
         this.userService = userService;
         this.jsonProducer = jsonProducer;
+        this.channelService = channelService;
     }
 
 //    @GetMapping//localhost:3309/message?sender=   ?receiver= ?message=
@@ -70,6 +76,35 @@ public class MessageController
         ResponseEntity<MessageResponse> messageResponseResponseEntity = new ResponseEntity<>(messageResponse, HttpStatus.CREATED);
         return messageResponseResponseEntity;}
 
+    }
+    @PostMapping(path = "/channelsend",produces={ //localhost:8080/message/channelsend
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE
+    })
+
+    public ResponseEntity<MessageResponse>sendchannelmessage(@Valid @RequestBody MessageRequest messageRequest){
+        MessageDto messageDto =new ModelMapper().map(messageRequest,MessageDto.class);
+        UserDto sender =userService.loadUserByUsername(messageDto.getSender());
+        ChannelDto channelDto=channelService.loadChannelByUsername(messageDto.getReceiver());
+        if (sender==null||channelDto==null){
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+        if(!sender.getUsername().equals(channelDto.getAdmin())){
+            return new ResponseEntity<>(null,HttpStatus.METHOD_NOT_ALLOWED);
+        }
+        else{
+            messageDto.setDate(new Date(System.currentTimeMillis()));
+            messageService.sendmessage(messageDto);
+            jsonProducer.sendJsonmessage(messageDto,messageDto.getReceiver(),null);
+            MessageResponse messageResponse=new ModelMapper().map(messageDto, MessageResponse.class);
+            messageResponse.setReceived(true);
+            ResponseEntity<MessageResponse> messageResponseResponseEntity = new ResponseEntity<>(messageResponse, HttpStatus.CREATED);
+            return messageResponseResponseEntity;
+
+
+
+
+        }
     }
 //    public ResponseEntity<String> sendJsonMessage(@RequestBody MessageDto messageDto){
 //        jsonProducer.sendJsonmessage(messageDto);
