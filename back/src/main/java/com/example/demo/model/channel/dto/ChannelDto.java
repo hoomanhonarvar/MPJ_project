@@ -5,15 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 
-public class ChannelDto {
+public class ChannelDto implements Serializable {
 
     private long id;
-    private String Admin;
+    private String username;
+    private String admin;
     private String members[];
+    private int numberofmembers;
 
 
 }

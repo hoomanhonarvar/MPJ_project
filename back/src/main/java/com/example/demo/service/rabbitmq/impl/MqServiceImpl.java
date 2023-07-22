@@ -1,16 +1,15 @@
 package com.example.demo.service.rabbitmq.impl;
 
+import com.example.demo.model.channel.dto.ChannelDto;
 import com.example.demo.service.rabbitmq.MqService;
 import com.rabbitmq.client.*;
 import lombok.SneakyThrows;
-import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
 
 @Service
@@ -43,6 +42,30 @@ public class MqServiceImpl implements MqService {
 
         channel.close();
         connection.close();
+
+    }
+
+    @Override
+    @SneakyThrows
+    public void new_channel(ChannelDto channelDto)  {
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("localhost");
+        factory.setUsername("guest");
+        factory.setPassword("guest");
+        factory.setPort(5672);
+
+        Connection connection=factory.newConnection();
+        Channel channel = connection.createChannel();
+        AMQP.Exchange.DeclareOk declareOk1=channel.exchangeDeclare(channelDto.getUsername(), BuiltinExchangeType.FANOUT,true,false,null);
+        for (int i =0;i<channelDto.getNumberofmembers();i+=1){
+            channel.queueBind(channelDto.getMembers()[i],channelDto.getUsername(),channelDto.getMembers()[i]);
+
+        }
+        channel.close();
+        connection.close();
+
+
+
 
     }
 

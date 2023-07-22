@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 
 public class ResponseChannel {
-
-    private String Admin;
+    private String username;
+    private String admin;
     private String members[];
+    private int numberofmembers;
+
 }
