@@ -2,6 +2,7 @@ package com.example.demo.controller.message;
 
 
 import com.example.demo.model.channel.dto.ChannelDto;
+import com.example.demo.model.channel.respone.ResponseChannel;
 import com.example.demo.model.message.dto.MessageDto;
 import com.example.demo.model.message.request.MessageRequest;
 import com.example.demo.model.message.response.MessageResponse;
@@ -11,6 +12,12 @@ import com.example.demo.model.users.dto.UserDto;
 import com.example.demo.service.channel.ChannelService;
 import com.example.demo.service.message.MessageService;
 import com.example.demo.service.users.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -19,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+@Tag(name = "Message Controller" ,description = "Message API in message Controller")
 
 @RestController
 @RequestMapping("message")//https://localhost:3309/message
@@ -55,7 +63,15 @@ public class MessageController
 //
 //
 //    }
-    @PostMapping(path="/send",produces={ //localhost:8080/message/send
+@Operation(
+        summary = "Send Message",
+        description = "Sending message in Post methode to  //localhost:8080/message/send URL")
+
+@ApiResponses({
+        @ApiResponse(responseCode = "201", content = { @Content(schema = @Schema(implementation = MessageController.class), mediaType = "application/json") }),
+        @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }) })
+
+@PostMapping(path="/send",produces={ //localhost:8080/message/send
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE
     })
@@ -77,7 +93,22 @@ public class MessageController
         return messageResponseResponseEntity;}
 
     }
-    @PostMapping(path = "/channelsend",produces={ //localhost:8080/message/channelsend
+//    @PostMapping(path="/groupsend",produces={ //localhost:8080/message/channelsend
+//            MediaType.APPLICATION_JSON_VALUE,
+//            MediaType.APPLICATION_XML_VALUE
+//    })
+//
+//    public ResponseEntity<ResponseChannel> sendgroup(@Valid @RequestBody Request)
+@Operation(
+        summary = "Send Message in Channel",
+        description = "Sending message in channel with Post methode to  //localhost:8080/message/channelsend URL")
+
+@ApiResponses({
+        @ApiResponse(responseCode = "201", content = { @Content(schema = @Schema(implementation = MessageController.class), mediaType = "application/json") }),
+        @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+        @ApiResponse(responseCode = "405", content = { @Content(schema = @Schema()) }) })
+
+@PostMapping(path = "/channelsend",produces={ //localhost:8080/message/channelsend
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE
     })

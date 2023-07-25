@@ -1,21 +1,30 @@
 package com.example.demo.controller.users;
 
+import com.example.demo.controller.channel.ChannelController;
 import com.example.demo.model.users.request.UserDetailRequestModel;
 import com.example.demo.service.rabbitmq.MqService;
 import com.example.demo.service.users.UserService;
 import com.example.demo.model.users.dto.UserDto;
 import com.example.demo.model.users.response.UserDetailResponseModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 //import javax.validation.Valid;
+
+
+@Tag(name = "User Controller " ,description = "User API in User Controller")
 
 @CrossOrigin(origins = "http://localhost:3000")
 
@@ -23,13 +32,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("users") //https://localhost:8080/users
 public class UserController {
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder ;
 
     private final MqService mqService;
-    public UserController(UserService userService, PasswordEncoder passwordEncoder, MqService mqService) {
+    public UserController(UserService userService, MqService mqService) {
 
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
         this.mqService = mqService;
     }
 
@@ -60,6 +67,14 @@ public class UserController {
 //        return register(null);
 //    }
 
+    @Operation(
+            summary = "Sign in ",
+            description = "Sign in to web with Post methode"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ChannelController.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
 
     @PostMapping(path="/signin", produces={
             MediaType.APPLICATION_JSON_VALUE,
@@ -104,6 +119,15 @@ public ResponseEntity<UserDetailResponseModel> signin(@Valid @RequestBody UserDe
 //
 //
 //    }
+
+    @Operation(
+            summary = "Signup ",
+            description = "Signup to web with Post methode"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ChannelController.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "406", content = { @Content(schema = @Schema()) }) })
+
     @SneakyThrows
     @PostMapping(path="/signup",            produces={
             MediaType.APPLICATION_JSON_VALUE,
@@ -121,15 +145,7 @@ public ResponseEntity<UserDetailResponseModel> signin(@Valid @RequestBody UserDe
         }
         else{
 //            ResponseEntity<UserDetailResponseModel> responseEntity=new ResponseEntity<UserDetailResponseModel>;
-            return new  ResponseEntity<> (null,HttpStatus.MULTIPLE_CHOICES);
+            return new  ResponseEntity<> (null,HttpStatus.NOT_ACCEPTABLE);
         }
-    }
-    @PutMapping
-    public String changeUser(){
-        return "User changeing was called";
-    }
-    @DeleteMapping
-    public String deleteUser(){
-        return "User deleting was calles";
     }
 }

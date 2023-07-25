@@ -5,12 +5,7 @@ import com.example.demo.model.users.dto.UserDto;
 import com.example.demo.model.users.entity.UserEntity;
 import com.example.demo.service.users.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,11 +16,9 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder ;
-    public UserServiceImpl(UserRepository userRepository,PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository) {
 
         this.userRepository=userRepository;
-        this.passwordEncoder=passwordEncoder;
     }
 
 
@@ -33,7 +26,6 @@ public class UserServiceImpl implements UserService {
    public UserDto register(UserDto userDto){
         UserEntity userEntity = new UserEntity();
         userEntity.setRole("USER");
-        userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userEntity.setPass(userDto.getPassword());
         userEntity.setUsername(userDto.getUsername());
 
@@ -43,7 +35,7 @@ public class UserServiceImpl implements UserService {
    }
 
     @Override
-    public UserDto loadUserByUsername(String username)throws UsernameNotFoundException{
+    public UserDto loadUserByUsername(String username){
         UserEntity userEntity = userRepository.findByUsername(username);
         UserDto userDto=new UserDto();
         userDto.setUsername(null);

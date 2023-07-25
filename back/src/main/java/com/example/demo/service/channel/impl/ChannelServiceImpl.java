@@ -5,7 +5,6 @@ import com.example.demo.model.channel.dto.ChannelDto;
 import com.example.demo.model.channel.entity.ChannelEntitiy;
 import com.example.demo.service.channel.ChannelService;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
@@ -28,7 +27,7 @@ public class ChannelServiceImpl implements ChannelService {
 
 
     @Override
-    public ChannelDto loadChannelByUsername(String username)throws UsernameNotFoundException{
+    public ChannelDto loadChannelByUsername(String username){
         ChannelEntitiy channelEntitiy=channelRepository.findByUsername(username);
         ChannelDto channelDto=new ChannelDto();
         channelDto.setUsername(null);
